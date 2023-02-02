@@ -1,0 +1,146 @@
+<div class="app-modal-container">
+    <div class="app-modal-label">
+        <p>
+            Nuevo Empleado
+        </p>
+    </div>
+
+    <div class="app-modal-content" >
+        <div fxLayoutGap="10px" fxLayout="column">
+            <form fxLayoutGap="10px" fxLayout="column">                
+                <div style="display: flex;justify-content: space-between">
+                    <mat-form-field style="width:30%" appearance="outline">
+                        <mat-label>Nombres</mat-label>
+                        <input matInput placeholder="Nombres" autocomplete="off" required />
+                    </mat-form-field>
+                    <mat-form-field style="width:30%" appearance="outline">
+                        <mat-label>Primer Apellido</mat-label>
+                        <input matInput placeholder="Primer Apellido" autocomplete="off" required />
+                    </mat-form-field>
+                    <mat-form-field style="width:30%" appearance="outline">
+                        <mat-label>Segundo Apellido</mat-label>
+                        <input matInput placeholder="Segundo Apellido" autocomplete="off" required />
+                    </mat-form-field> 
+                </div>
+                <div style="display: flex;justify-content: space-between">
+                    <mat-form-field style="width:25%" appearance="outline">
+                        <mat-label>Tipo de Id</mat-label>
+                        <mat-select required>
+                            <mat-option *ngFor="let id of tipoId" [value]="id.doc">
+                              {{id.doc}}
+                            </mat-option>
+                          </mat-select>
+                    </mat-form-field>
+                    <mat-form-field style="width:25%" appearance="outline">
+                        <mat-label>Número de identificación</mat-label>
+                        <input matInput placeholder="Número de identificación" autocomplete="off" required />
+                    </mat-form-field>
+                    <mat-form-field style="width:15%" appearance="outline">
+                        <mat-label>Sexo</mat-label>
+                        <mat-select >
+                            <mat-option *ngFor="let sex of sexo" [value]="sex.tipoS">
+                              {{sex.tipoS}}
+                            </mat-option>
+                          </mat-select>
+                    </mat-form-field>
+                    <mat-form-field style="width:25%" appearance="outline">
+                        <mat-label>Fecha de Nacimiento</mat-label>
+                        <input matInput [matDatepicker]="picker" (click)="picker.open()" autocomplete="off" required />                        
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field> 
+                </div>
+                <div style="display: flex;justify-content: flex-start;align-items: baseline;">
+                    <mat-form-field style="width:55%" appearance="outline">
+                        <mat-label>Cargo</mat-label>
+                        <mat-select required>
+                            <mat-option >
+                              
+                            </mat-option>
+                          </mat-select>
+                    </mat-form-field> 
+                    <section style="margin-left:20px">
+                        <mat-checkbox color="primary" [(ngModel)]="checked" name="cargo"></mat-checkbox>                        
+                    </section>                   
+                </div>    
+            </form>
+
+            <mat-tab-group  mat-align-tabs="center">
+                <mat-tab label="General">
+                    <form fxLayoutGap="10px" fxFlex="100%" fxLayout="column" style="margin-top: 20px;">                
+                        <div style="display: flex;justify-content: space-between;">
+                            <mat-form-field style="width:45%" appearance="outline">
+                                <mat-label>Fecha de Ingreso</mat-label>
+                                <input matInput [matDatepicker]="picker1" (click)="picker1.open()" autocomplete="off" required />                        
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field style="width:45%" appearance="outline">
+                                <mat-label>Fecha de Retiro</mat-label>
+                                <input matInput [matDatepicker]="picker2" (click)="picker2.open()" autocomplete="off" required />                        
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </form>
+                </mat-tab>
+                <mat-tab label="Salario">
+                    <button mat-icon-button color="primary" color="primary" (click)="addRow()" style="margin-top:20px">
+                        <mat-icon>add_circle</mat-icon>
+                    </button>  
+                    <div fxFlex="100%">
+                        <ag-grid-angular style="height: 250px;width: auto;" fxFlex="100%" #agGridSalario class="ag-theme-balham" [rowData]="listaSalario"  
+                            [gridOptions]="gridOptionsSalario" [allowContextMenuWithControlKey]="true"  [columnDefs]="columnDefsSalario" (cellClicked)="onCellClicked($event);" [singleClickEdit]="true">
+                        </ag-grid-angular>
+                      </div>
+                </mat-tab>
+                <mat-tab label="Información de Contacto">
+                    <form fxLayoutGap="10px" fxFlex="100%" fxLayout="column" style="margin-top: 20px;">                
+                        <div style="display: flex;justify-content: space-between">
+                            <mat-form-field style="width:30%" appearance="outline">
+                                <mat-label>País</mat-label>
+                                <input matInput placeholder="" autocomplete="off" required /> 
+                            </mat-form-field>
+                            <mat-form-field style="width:30%" appearance="outline">
+                                <mat-label>Departamento</mat-label>
+                                <input matInput placeholder="" autocomplete="off" required />
+                            </mat-form-field>
+                            <mat-form-field style="width:30%" appearance="outline">
+                                <mat-label>Ciudad</mat-label>
+                                <input matInput placeholder="" autocomplete="off" required />
+                            </mat-form-field>                            
+                        </div>
+                        <div style="display: flex;justify-content: space-between">
+                            <mat-form-field style="width:45%" appearance="outline">
+                                <mat-label>Barrio</mat-label>
+                                <input matInput placeholder="" autocomplete="off" required />
+                            </mat-form-field>
+                            <mat-form-field style="width:45%" appearance="outline">
+                                <mat-label>Dirección</mat-label>
+                                <input matInput placeholder="" autocomplete="off" required />
+                            </mat-form-field>                            
+                        </div>
+                        <div style="display: flex;justify-content: space-between">
+                            <mat-form-field style="width:30%" appearance="outline">
+                                <mat-label>Teléfono</mat-label>
+                                <input type="tel" matInput placeholder="Teléfono" autocomplete="off" required />
+                            </mat-form-field>
+
+                            <mat-form-field style="width:60%" appearance="outline">
+                                <mat-label>Email</mat-label>
+                                <input type="email" matInput placeholder="Email" autocomplete="off" required />
+                            </mat-form-field>
+                        </div>
+                    </form>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+
+    <div class="app-modal-actions">
+        <button align="end" mat-stroked-button color="primary" mat-dialog-close>
+          Cancelar
+        </button>
+        <button align="end" mat-raised-button color="primary" mat-dialog-close>
+          Guardar
+        </button>
+    </div>
+    
+</div>

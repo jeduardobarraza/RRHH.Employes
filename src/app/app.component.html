@@ -1,0 +1,17 @@
+<div class="app-container">
+  <div class="app-label-container">
+    <span class="app-label">
+      <h1 class="mat-headline">Empleados</h1>
+    </span>
+  </div>      
+  <div style="display:flex; justify-content: end;">
+    <button mat-icon-button color="primary" style="margin-right:40px" (click)="getEmploye()">
+      <mat-icon style="font-size:50px; display: contents;">add_circle</mat-icon>
+    </button>
+  </div>  
+  <div>
+    <ag-grid-angular style="height: 600px;width: auto;" fxFlex="100%" id="#myGrid" class="ag-theme-balham" [rowData]="lista"  
+        [gridOptions]="gridOptions" [allowContextMenuWithControlKey]="true" (gridReady)="onGridReady($event)" [columnDefs]="columnDefsGeneral">
+    </ag-grid-angular>
+  </div>
+</div>
